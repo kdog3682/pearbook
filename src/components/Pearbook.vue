@@ -3,13 +3,14 @@
 import * as utils from "/home/kdog3682/2023/utils.js"
 import {onBeforeEnter, onEnter, onAfterEnter, onBeforeLeave, onLeave, onAfterLeave} from "../animations.js"
 import {routes} from "../router.js"
-import VInput from "@foxscribe/v-input.vue"
+// import VInput from "@foxscribe/v-input.vue"
 function push(name, params = {}) {
     router.push({ name, params})
 }
 onMounted(async () => {
     await utils.sleep(1000)
-    router.push('/students/sam/assignments/foobar') // testing invalid assignment
+    // router.push('/students/sam/assignments/foobar') // testing invalid assignment ... works
+    router.push('/students/sam')
 })
 
 const input = ref(null)
@@ -51,8 +52,13 @@ useKeyListener(keyHandlers)
 
 
 <template lang= 'pug'>
-    router-view
 
+    div.abs
+        language-button
+
+    p {{ $t('examples.sayhi') }}
+
+    router-view
     keep-alive
         v-input(@submit = 'onSubmit' v-show = 'showInput' ref = 'input')
 
@@ -60,3 +66,10 @@ useKeyListener(keyHandlers)
     // v-info(:value = 'routes', label = 'routes')
 </template>
 
+    <style lang = 'stylus' scoped>
+
+.abs
+    position: absolute
+    top: 25px
+    right: 85px
+    </style>

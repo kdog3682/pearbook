@@ -1,7 +1,7 @@
 <template lang="pug">
     
 h2 {{ assignment.title }}
-button(@click = 'accessAssignment') open
+button(@click = 'accessAssignment') {{ $t('open') }}
 
 </template>
 

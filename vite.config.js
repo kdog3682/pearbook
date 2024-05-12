@@ -22,6 +22,7 @@ export default defineConfig({
         Components({
             dirs: [
                 "src/components",
+                "/home/kdog3682/projects/foxscribe/src/components",
                 "src/layouts",
                 "src/pages",
                 "src/views",

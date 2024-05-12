@@ -1,5 +1,5 @@
 <template lang = 'pug'>
-    h3 {{accessor}}
+    h3 {{$t(accessor)}}
 
     ol(v-if = 'numbered')
         li(v-for = 'item, index in items')

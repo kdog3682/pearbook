@@ -3,7 +3,7 @@
 
     m-list(accessor = 'internalLinks')
         template(#default = "item")
-            router-link(:to = "computeLinkAddress(item)") {{item.name}}
+            router-link(:to = "computeLinkAddress(item)") {{$t(item.name)}}
 
     // m-list(accessor = 'externalLinks')
         // template(#default = "item")
