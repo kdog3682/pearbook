@@ -2,15 +2,25 @@
 /* deno-fmt-ignore */ import { createWebHashHistory, createMemoryHistory, createRouter } from 'vue-router'
 
 const components = import.meta.glob("./views/*.vue")
-
-function get(name) {
-    const path = `./views/${pascalCase(name)}.vue`
-    const component = components[path]
-    if (component) {
-        return component
+function get(name, useFallback = true) {
+    if (empty(name)) {
+        return 
     }
+    if (!isString(name)) {
+        return name
+    }
+    const funcs = [pascalCase, dashCase]
+    for (const fn of funcs) {
+        const path = `./views/${fn(name)}.vue`
+        const component = components[path]
+        if (component) {
+            return component
+        }
+    }
+    if (useFallback) {
     return {
         template: `<p>component: ${name}</p>`,
+    }
     }
 }
 
@@ -28,52 +38,89 @@ const routes = [
     { path: "/about", name: "about" },
     {
         path: "/students/:username",
+        // component: "StudentHomePage",
         children: [
             {
                 path: "",
-                name: 
-                component: "StudentHomePage",
+                component: 'StudentHomePage',
+                children: [
+                    {name: 'abc', path: 'abc', component: 'abc'},
+                    {name: 'def', path: 'def', component: 'def'},
+                ]
             },
+            // dont need this when u have the top level thing
             {
                 path: "scores",
+                name: "scores",
                 component: "Scores",
             },
             {
                 path: "results",
+                name: "results",
                 component: "Results",
             },
             {
-                path: "assignments",
-                component: "Assignments",
+                path: "assignments/:assignmentId",
+                name: "assignments",
+                component: "assignment-page",
+                props: true,
             },
         ],
     },
     adminRoute,
+    { 
+        path: '/:pathMatch(.*)*', props: true, component: 'NotFound',
+    },
+    {
+        path: '/404',
+        name: 'NotFound',
+        component: 'NotFound',
+        props: true,
+    },
+    {
+        path: '/alwaysworks',
+        name: 'alwaysworks',
+        component: 'AlwaysWorks',
+    },
+
+    {
+        path: '/Home',
+        name: 'Home',
+        component: 'Home',
+    },
 ]
 
-function recursiveCreate(route) {
-    console.log("recursigve create")
-    const children = route.children.map(create)
-    return {
-        ...route,
-        children,
-    }
-}
 function create(route) {
+    if (isString(route)) {
+        throw new Error('no string routes allowed')
+    }
+
+    let children
+    let component
+    let path = route.path
+    let name = route.name
+    let props = route.props
+    let beforeEnter = route.beforeEnter
+    let redirect = route.redirect
+
     if (route.children) {
-        return recursiveCreate(route)
+        children = route.children.map(create)
     }
     if (route.component) {
-        if (isString(route.component)) {
-            route.component = get(route.component)
-        }
-        return route
+        component = get(route.component)
     }
-    const component = get(route.name)
-    return {
-        ...route,
-        component,
-    }
+
+    const payload = {}
+    if (isDefined(path)) payload.path = path
+    if (isDefined(name)) payload.name = name
+    if (isDefined(component)) payload.component = component
+    if (isDefined(children)) payload.children = children
+    if (isDefined(props)) payload.props = props
+    if (isDefined(beforeEnter)) payload.beforeEnter = beforeEnter
+    if (isDefined(redirect)) payload.redirect = redirect
+    // path name component children
+    // console.log(payload)
+    return payload
 }
 
 const router = createRouter({
@@ -84,3 +131,4 @@ const router = createRouter({
 
 export { routes }
 export default router
+

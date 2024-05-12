@@ -31,9 +31,11 @@ export default defineConfig({
             imports: [
                 "vue",
                 "vue-router",
+                "pinia",
             ],
             dirs: [
                 "src/composables/**",
+                "src/stores/**",
             ],
         }),
     ],

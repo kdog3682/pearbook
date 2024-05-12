@@ -8,11 +8,8 @@ function push(name, params = {}) {
     router.push({ name, params})
 }
 onMounted(async () => {
-    await utils.sleep(2000)
-    push('students', {username: 'sam'})
-    input.value.focus()
-    // console.log(Object.keys(val))
-    // push('home')
+    await utils.sleep(1000)
+    router.push('/students/sam/assignments/foobar') // testing invalid assignment
 })
 
 const input = ref(null)
@@ -55,10 +52,11 @@ useKeyListener(keyHandlers)
 
 <template lang= 'pug'>
     router-view
+
     keep-alive
         v-input(@submit = 'onSubmit' v-show = 'showInput' ref = 'input')
 
     v-info(:value = '$route', label = '$route')
-    v-info(:value = 'routes', label = 'routes')
+    // v-info(:value = 'routes', label = 'routes')
 </template>
 
