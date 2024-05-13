@@ -4,7 +4,7 @@
 const components = import.meta.glob("./views/*.vue")
 function get(name, useFallback = true) {
     if (empty(name)) {
-        return 
+        return
     }
     if (!isString(name)) {
         return name
@@ -18,9 +18,9 @@ function get(name, useFallback = true) {
         }
     }
     if (useFallback) {
-    return {
-        template: `<p>component: ${name}</p>`,
-    }
+        return {
+            template: `<p>component: ${name}</p>`,
+        }
     }
 }
 
@@ -33,20 +33,78 @@ const adminRoute = {
     ],
 }
 
+import { usePiniaFetchStudentData } from "/home/kdog3682/projects/pearbook/src/composables/usePiniaFetchStudentData.js"
+
+async function beforeEach(to, from, next) {
+    const pinFetch = usePiniaFetchStudentData() // this is a reference
+    // pinFetch.setStorage('a')
+    // console.log('howdy')
+    const destination = to.name
+    if (destination == "home") {
+        // console.log('name is home')
+        // await pinFetch.createAccount('Ham')
+
+        const accountData = pinFetch.getStorage('accountData')
+        // console.log(accountData)
+        if (accountData) {
+            next({name: "student-home", params: {username: accountData.username} })
+        } else {
+            next()
+        }
+    } 
+    else if (destination == "student-home") {
+        // console.log(from, to)
+        next()
+    } else {
+        next()
+    }
+}
 const routes = [
-    { path: "/", name: "home" },
-    { path: "/about", name: "about" },
+    {
+        path: "/",
+        name: "home",
+        component: "home",
+        async beforeEnter(to, from, next) {
+            // const a = usePiniaFetchStudentData()
+            // console.log({a})
+            console.log(from, to)
+            next()
+            // next('/changelog')
+        },
+    },
+    {
+        path: "/changelog",
+        name: "changelog",
+        component: "changelog",
+    },
+    {
+        path: "/resources",
+        name: "resources",
+        component: "resources",
+    },
+    { path: "/about", name: "about", component: "about" },
     {
         path: "/students/:username",
         // component: "StudentHomePage",
         children: [
             {
                 path: "",
-                component: 'StudentHomePage',
+                component: "StudentHomePage2",
+                name: 'student-home',
                 children: [
-                    {name: 'abc', path: 'abc', component: 'abc'},
-                    {name: 'def', path: 'def', component: 'def'},
-                ]
+                    {
+                        name: "student-details",
+                        path: "details",
+                        component: "student-details",
+                        props: true,
+                    },
+                    {
+                        name: "student-timeline",
+                        path: "student-timeline",
+                        component: "student-timeline",
+                        props: true,
+                    },
+                ],
             },
             // dont need this when u have the top level thing
             {
@@ -68,31 +126,33 @@ const routes = [
         ],
     },
     adminRoute,
-    { 
-        path: '/:pathMatch(.*)*', props: true, component: 'NotFound',
+    {
+        path: "/:pathMatch(.*)*",
+        props: true,
+        component: "NotFound",
     },
     {
-        path: '/404',
-        name: 'NotFound',
-        component: 'NotFound',
+        path: "/404",
+        name: "NotFound",
+        component: "NotFound",
         props: true,
     },
     {
-        path: '/alwaysworks',
-        name: 'alwaysworks',
-        component: 'AlwaysWorks',
+        path: "/alwaysworks",
+        name: "alwaysworks",
+        component: "AlwaysWorks",
     },
 
     {
-        path: '/Home',
-        name: 'Home',
-        component: 'Home',
+        path: "/Home",
+        name: "Home",
+        component: "Home",
     },
 ]
 
 function create(route) {
     if (isString(route)) {
-        throw new Error('no string routes allowed')
+        throw new Error("no string routes allowed")
     }
 
     let children
@@ -129,6 +189,7 @@ const router = createRouter({
     routes: routes.map(create),
 })
 
+router.beforeEach(beforeEach)
+
 export { routes }
 export default router
-

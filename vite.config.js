@@ -23,6 +23,7 @@ export default defineConfig({
             dirs: [
                 "src/components",
                 "/home/kdog3682/projects/foxscribe/src/components",
+                // "/home/kdog3682/projects/greenleaf/src/components",
                 "src/layouts",
                 "src/pages",
                 "src/views",

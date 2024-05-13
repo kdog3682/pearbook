@@ -10,7 +10,8 @@ function push(name, params = {}) {
 onMounted(async () => {
     await utils.sleep(1000)
     // router.push('/students/sam/assignments/foobar') // testing invalid assignment ... works
-    router.push('/students/sam')
+    // router.push('/students/sam')
+    router.push({name: 'home'})
 })
 
 const input = ref(null)
@@ -58,7 +59,15 @@ useKeyListener(keyHandlers)
 
     p {{ $t('examples.sayhi') }}
 
-    router-view
+    // router-view
+
+    RouterView(v-slot="{ Component }")
+      template(v-if = 'Component')
+        Suspense
+          component(:is="Component")
+          template(#fallback)
+              span loading
+
     keep-alive
         v-input(@submit = 'onSubmit' v-show = 'showInput' ref = 'input')
 
