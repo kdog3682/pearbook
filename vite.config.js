@@ -47,5 +47,5 @@ export default defineConfig({
             "@foxscribe": componentPath('foxscribe')
         },
     },
-    base: "/pearbook/",
+    // base: "/pearbook/",
 })

@@ -1,5 +1,11 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+
 html
-    zoom: 1.25
+    zoom: 1
 $color-text-dark: rgba(255, 255, 255, 0.87)
 $color-bg-dark: #242424
 $color-link-normal: #646cff
@@ -32,12 +38,6 @@ a
 a:hover
   color: $color-link-hover-dark
 
-body
-  margin: 0
-  padding: 5px
-  // place-items: center
-  width: 100vw
-  height: 100vh
 
 h1
   font-size: 3.2em
@@ -64,9 +64,11 @@ button:focus-visible
 .card
   padding: 2em
 
+
 #app
-  width: 100vw
-  padding: 1rem
+    width: 100vw
+    background: yellow
+    border: 10px solid black
 
 @media (prefers-color-scheme: light)
   :root

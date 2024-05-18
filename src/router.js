@@ -33,10 +33,13 @@ const adminRoute = {
     ],
 }
 
+import { useLocalData } from "/home/kdog3682/projects/pearbook/src/composables/useLocalData.js"
 import { usePiniaFetchStudentData } from "/home/kdog3682/projects/pearbook/src/composables/usePiniaFetchStudentData.js"
 
+
+
 async function beforeEach(to, from, next) {
-    const pinFetch = usePiniaFetchStudentData() // this is a reference
+    const pinFetch = usePiniaFetchStudentData()
     // pinFetch.setStorage('a')
     // console.log('howdy')
     const destination = to.name
@@ -65,9 +68,6 @@ const routes = [
         name: "home",
         component: "home",
         async beforeEnter(to, from, next) {
-            // const a = usePiniaFetchStudentData()
-            // console.log({a})
-            console.log(from, to)
             next()
             // next('/changelog')
         },
@@ -85,6 +85,24 @@ const routes = [
     { path: "/about", name: "about", component: "about" },
     {
         path: "/students/:username",
+        async beforeEnter(to, from, next) {
+            if (to.path.includes('ssss')) {
+                return next({name: 'NotFound'})
+            }
+            const pinFetch = usePiniaFetchStudentData()
+            const a = pinFetch.getStorage('accountData')
+
+            // console.log(to.params.username, a.username)
+            // console.log(to.params, a.username)
+            // console.log(a)
+            if (a && a.username == to.params.username) {
+                 next()
+            } else {
+                const local = useLocalData()
+                local.set('username', to.params.username)
+                next({name: 'forbidden'})
+            }
+        },
         // component: "StudentHomePage",
         children: [
             {
@@ -123,6 +141,11 @@ const routes = [
                 component: "assignment-page",
                 props: true,
             },
+            {
+                path: ":pathMatch(.*)*",
+                props: true,
+                component: "NotFound",
+            },
         ],
     },
     adminRoute,
@@ -147,6 +170,12 @@ const routes = [
         path: "/Home",
         name: "Home",
         component: "Home",
+    },
+
+    {
+        path: "/forbidden",
+        name: "forbidden",
+        component: "Forbidden",
     },
 ]
 
@@ -176,7 +205,7 @@ function create(route) {
     if (isDefined(component)) payload.component = component
     if (isDefined(children)) payload.children = children
     if (isDefined(props)) payload.props = props
-    if (isDefined(beforeEnter)) payload.beforeEnter = beforeEnter
+    // if (isDefined(beforeEnter)) payload.beforeEnter = beforeEnter
     if (isDefined(redirect)) payload.redirect = redirect
     // path name component children
     // console.log(payload)
@@ -189,7 +218,8 @@ const router = createRouter({
     routes: routes.map(create),
 })
 
-router.beforeEach(beforeEach)
+// router.beforeEach(beforeEach)
 
 export { routes }
 export default router
+

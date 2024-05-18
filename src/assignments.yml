@@ -1,0 +1,84 @@
+assignments:
+    G6-chemistry-1:
+        points: 100
+        difficulty: 1
+        topics:
+            - limitingReagent
+            - stoichiometry
+        problemset:
+            - problem: |
+                2 grams of H2O can react with 3 grams of 
+                NO2 yielding?
+              answer: 6 grams of NO3
+              hint: use the limiting reagent
+              choices:
+                  - fish
+                  - 123
+                  - ham
+                  - flybar
+                  - 6 grams of NO3
+
+    G6-chemistry-2:
+        points: 120
+        difficulty: 2
+        topics:
+            - balancingEquations
+            - acidBaseReactions
+            - molarity
+            - gasLaws
+            - solubility
+        problemset:
+            - problem: |
+                Balance the equation: H2 + O2 -> H2O.
+              answer: 2H2 + O2 -> 2H2O
+              hint: Count the number of each type of atom on both sides.
+              choices:
+                  - H2 + O2 -> H2O2
+                  - 2H2 + O2 -> 2H2O
+                  - H2 + O2 -> 2H2O
+                  - 2H2 + 2O2 -> 2H2O
+                  - H2 + 2O2 -> H2O
+
+            - problem: |
+                What is the pH of a 0.01 M solution of HCl?
+              answer: 2
+              hint: pH = -log[H+]
+              choices:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+
+            - problem: |
+                Calculate the molarity of a solution that contains 5 moles of solute in 2 liters of solution.
+              answer: 2.5 M
+              hint: Molarity = moles of solute / liters of solution
+              choices:
+                  - 2 M
+                  - 2.5 M
+                  - 3 M
+                  - 2.75 M
+                  - 3.5 M
+
+            - problem: |
+                If a gas occupies 10 liters at 1 atm, what volume will it occupy at 2 atm, assuming temperature is constant?
+              answer: 5 liters
+              hint: "Use Boyle's Law: P1V1 = P2V2"
+              choices:
+                  - 20 liters
+                  - 10 liters
+                  - 5 liters
+                  - 15 liters
+                  - 25 liters
+
+            - problem: |
+                Which of the following compounds is most soluble in water?
+              answer: NaCl
+              hint: Consider ionic compounds.
+              choices:
+                  - NaCl
+                  - C6H12O6
+                  - CH4
+                  - CO2
+                  - O2

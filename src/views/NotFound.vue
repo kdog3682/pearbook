@@ -1,16 +1,12 @@
 <template lang="pug">
-    v-templater(value = '$url is an invalid url.' :arg = 'url')
+    p howdy from not found
+    p invalid url https://brooklynlearning.github.io{{$route.fullPath}}
     button(@click = '$router.push({name: "Home"})') go home
 </template>
 
 <script setup>
 
 const props = defineProps(['pathMatch'])
-
-const url = computed(() => {
-    const prefix = 'https://pearbook.github.io/'
-    return prefix + props.pathMatch.join('/')
-})
 
 const returnLink = computed(() => {
     return props.pathMatch.join('/')
