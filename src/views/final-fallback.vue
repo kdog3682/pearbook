@@ -4,6 +4,11 @@
     button(@click = '$router.push({name: "home"})') go home
 </template>
 
+<script setup>
+
+    defineProps(['pathMatch'])
+
+</script>
 
 <style lang="stylus">
 .templater

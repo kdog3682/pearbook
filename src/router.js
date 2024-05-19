@@ -56,6 +56,7 @@ function create(route) {
     let component
     let path = route.path
     let name = route.name
+    let meta = route.meta
     let props = route.props
     let beforeEnter = route.beforeEnter
     let redirect = route.redirect
@@ -71,6 +72,7 @@ function create(route) {
     if (isDefined(path)) payload.path = path
     if (isDefined(name)) payload.name = name
     if (isDefined(component)) payload.component = component
+    if (isDefined(meta)) payload.meta = meta
     if (isDefined(children)) payload.children = children
     if (isDefined(props)) payload.props = props
     if (isDefined(beforeEnter)) payload.beforeEnter = beforeEnter

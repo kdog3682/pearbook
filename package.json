@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "fzf": "^0.5.2",
+    "papaparse": "^5.4.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-i18n": "9",

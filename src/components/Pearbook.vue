@@ -1,14 +1,18 @@
 <script setup>
 onMounted(async () => {
     // WORKING
-    // await sleepGo('blogs')
+    // await sleepGo('hampsters')
     // await sleepGo('blogs/1')
     // await sleepGo('blogs/abcde')
     // await sleepGo('blogs/abcde/abcde', 3)
     // await sleepGo('ceasar/salad', 3)
     // await sleepGo('@')
     //////////////////////////////////////////////
-    await sleepGo('@/jean/asdf')
+    await sleepGo('auth-handler')
+
+    // loginWithGoogle,
+    // signInWithEmail,
+    // loginAnonymously,
 })
 
 const input = ref(null)
@@ -107,4 +111,4 @@ async function sleepGo(url, delayAfter = 1) {
     position: absolute
     top: 25px
     right: 85px
-    </style>
+</style>

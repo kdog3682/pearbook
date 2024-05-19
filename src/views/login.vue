@@ -1,17 +1,14 @@
 <script setup>
-const { username, rememberMe, password, failedAttempts, status, login } = useFirebaseStudentLogin()
+const { createAccount, username, rememberMe, password, failedAttempts, status, login, email } = useFirebaseLogin()
 const props = defineProps(['userId'])
 import {vFocus} from '../directives/vMarked.js'
-
-const pinia = usePiniaStudent()
-const temp = pinia.getTemp()
-if (temp) {
-    username.value = temp
-}
 
 const router = useRouter()
 const handleLogin = async () => {
     const status = await login()
+    // const status = await createAccount()
+    console.log(status)
+    return
     if (status) {
         router.push({name: 'student-home', params: {username: username.value}})
     }
@@ -19,18 +16,18 @@ const handleLogin = async () => {
 
 onMounted(async () => {
     // await sleep(1000)
-    // username.value = 'jean'
-    // password.value = 'icecream'
+    email.value = 'kdog3682@gmail.com'
+    password.value = 'icecream'
     // await handleLogin() // reset
     // console.log('attempt 1')
     // await sleep(1000)
 
+    if (props.userId) {
+        console.log('we have props.userId', props.userId)
+        username.value = props.userId
+    }
 })
 
-
-const computedUser = computed(() => {
-    return props.userId || username.value
-})
 const autocompletePassword = computed(() => {
     return rememberMe.value ? 'current-password' : 'new-password'
 })
@@ -52,7 +49,7 @@ const disableLoginButton = computed(() => {
 form.login-form
   div.form-group
     label(for="username") Username
-    input(id="username" v-focus v-model="computedUser" type="text" placeholder="Enter your username"     autocomplete="username"
+    input(id="username" v-focus v-model="email" type="text" placeholder="Enter your username"     autocomplete="username"
 )
   div.form-group
     label(for="password") Password

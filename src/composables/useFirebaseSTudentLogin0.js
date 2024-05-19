@@ -1,4 +1,5 @@
 
+
 /* deno-fmt-ignore */ import {Storage} from "/home/kdog3682/2024-javascript/js-toolkit/LocalStorage.js"
 import {usePiniaStudent} from "/home/kdog3682/projects/pearbook/src/composables/usePiniaStudent.js"
 export {
@@ -19,6 +20,7 @@ import {
     updateDocument,
     updateDocumentField,
     uploadCollections,
+    loginAnonymously,
 } from '/home/kdog3682/@bkl/packages/services/src/firebaseService.js'
 
 async function fetchAccountData(username, reset) {
@@ -43,7 +45,7 @@ function useFirebaseStudentLogin() {
 
     const username = ref('')
     const password = ref('')
-    const rememberMe = ref(false)
+    const rememberMe = ref(true)
     const failedAttempts = ref(0)
     const status = reactive({error: '', success: ''})
     const pin = usePiniaStudent()
@@ -51,10 +53,10 @@ function useFirebaseStudentLogin() {
     async function login(reset) {
         // const accountData = await fetchAccountData(username.value, reset)
         const accountData = await pin.fetchAccountData(username.value)
-        console.log(pin.username.value)
 
         if (accountData) {
             if (password.value == accountData.password) {
+                await loginAnonymously(rememberMe.value)
                 status.success = 'loggedIn'
                 status.error = ''
                 return true
