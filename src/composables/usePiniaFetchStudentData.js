@@ -167,8 +167,8 @@ const definition = () => {
     }
 }
 
-// export const usePiniaFetchStudentData = defineStore(
-    // "studentData",
-    // definition,
-// )
+export const usePiniaFetchStudentData = defineStore(
+    "studentData",
+    definition,
+)
 

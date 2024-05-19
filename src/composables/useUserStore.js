@@ -32,47 +32,7 @@ function load() {
 
     return fulfillInterface(payload, schema)
 }
-function fulfillInterface(payload, schema) {
-    function get(v) {
-        switch (v) {
-            case "string":
-                return ""
-            case "number":
-                return 0
-            case "array":
-                return []
-            case "object":
-                return {}
-        }
-    }
-    function callback([k, v]) {
-        let value = payload[k]
-        if (value == null) {
-            value = get(v)
-        }
-        return [k, value]
-    }
-    return reduce(schema, callback)
-}
-function assertInterface(o, keys) {
-    const objectKeys = Object.keys(o).sort()
-    const valid =
-        Object.keys().toString() == keys.sort().toString()
-    if (valid) {
-        return
-    }
-    panic("object is missing the following keys:", keys)
-}
 
-function statef(key, fn) {
-    /* type: simple-factory-util */
-    return function lambda(state) {
-        return fn(state[key])
-    }
-}
-function reduceState(state, keys) {
-    return reduce(keys, (key) => [key, state[key]])
-}
 // data is
 const options = {
     state: load,

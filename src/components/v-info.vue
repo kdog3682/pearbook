@@ -1,5 +1,5 @@
 <template lang = 'pug'>
-    label(v-if = 'label') {{label}}
+    h3(v-if = 'label') {{label}}
     v-pre(:value = 'computedValue')
 </template>
 

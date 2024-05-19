@@ -1,16 +1,14 @@
 <script setup>
-import * as utils from "/home/kdog3682/2023/utils.js"
-import {onBeforeEnter, onEnter, onAfterEnter, onBeforeLeave, onLeave, onAfterLeave} from "../animations.js"
-import {routes} from "../router.js"
-// import VInput from "@foxscribe/v-input.vue"
-function push(name, params = {}) {
-    router.push({ name, params})
-}
 onMounted(async () => {
-    await utils.sleep(1000)
-    // router.push('/students/sam/assignments/foobar') // testing invalid assignment ... works
-    // router.push('/students/sam/assignmentssss')
-    // router.push({name: 'home'})
+    // WORKING
+    // await sleepGo('blogs')
+    // await sleepGo('blogs/1')
+    // await sleepGo('blogs/abcde')
+    // await sleepGo('blogs/abcde/abcde', 3)
+    // await sleepGo('ceasar/salad', 3)
+    // await sleepGo('@')
+    //////////////////////////////////////////////
+    await sleepGo('@/jean/asdf')
 })
 
 const input = ref(null)
@@ -69,6 +67,15 @@ function loadSam() {
     console.log('set sam!')
 }
 
+
+import * as utils from "/home/kdog3682/2023/utils.js"
+
+async function sleepGo(url, delayAfter = 1) {
+    const curl = utils.conditionalPrefix('/', url)
+    router.push(curl)
+    await utils.sleep(delayAfter * 1000)
+
+}
 </script>
 
 <template lang= 'pug'>

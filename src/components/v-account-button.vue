@@ -11,23 +11,43 @@ const closeDropdown = () => {
   isDropdownOpen.value = false
 }
 
-const links = [
-  { name: 'Settings', path: '/settings' },
-  { name: 'Inbox', path: '/inbox' },
-  { name: 'Preferences', path: '/preferences' },
-  { name: 'Sign Out', path: '/signout' }
+const pinia = usePiniaStudent()
+const base = [
+    "settings",
+    "inbox",
+    "preferences",
 ]
+
+const links = computed(() => {
+        return base.map((item, i) => {
+            return {
+                label: capitalize(item),
+                to: {
+                    name: item,
+                    params: {
+                        username:pinia.username
+                    }
+                }
+            }
+        })
+})
 </script>
 
 <template lang="pug">
-.account-button(@mouseover="openDropdown" @mouseleave="closeDropdown")
-  button
-    | Account
-    i.fas.fa-chevron-down
-  .dropdown(v-show="isDropdownOpen" @mouseover="openDropdown" @mouseleave="closeDropdown")
-    ul
-      li(v-for="link in links" :key="link.path")
-        router-link(:to="link.path") {{ link.name }}
+
+.signed-in-version(v-if = 'pinia.username')
+    .account-button(@mouseover="openDropdown" @mouseleave="closeDropdown")
+      button {{pinia.username}}
+        i.fas.fa-chevron-down
+      .dropdown(v-show="isDropdownOpen" @mouseover="openDropdown" @mouseleave="closeDropdown")
+        ul
+          li(v-for="link in links" :key="link.path")
+            router-link(:to="link.to") {{ link.label }}
+          li
+            button(@click = 'pinia.signOut') Sign Out
+.guest(v-else)
+  button(@click = 'pinia.signIn') Sign In
+    
 </template>
 
 <style lang="stylus" scoped>

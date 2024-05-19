@@ -67,8 +67,6 @@ const toggleShowAll = () => {
   currentIndex.value = 0
 }
 
-import { ref, computed } from 'vue'
-
 export function useProblemNavigation(problemset) {
   const currentIndex = ref(0)
 

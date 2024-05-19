@@ -92,18 +92,25 @@ changelog
 about
 
 blogs/:blog
-    home: 1
-students/:username
-    home
-    timeline
-        foobar
-    settings
+    home: true
+// students/:username
+    // home
+    // timeline
+        // foobar
+    // settings
 `
 
-// const struct = inAndOut(s, {
-    // onLeaf,
-    // onBranchExit,
-// })
-// console.loggg(struct.map((x) => x.json()))
+function onEnter(node) {
+    if (node.text.startsWith('//')) {
+        return false
+    }
+}
+
+const struct = inAndOut(s, {
+    onLeaf,
+    onBranchExit,
+    onEnter,
+})
+console.loggg(struct.map((x) => x.json()))
 // console.log(JSON.stringify(struct, null, 2))
 

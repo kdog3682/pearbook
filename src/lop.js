@@ -346,15 +346,20 @@ function run(s) {
 function toNode(x) {
     return isString(x) ? run(x) : x
 }
-function inAndOut(root, {onLeaf = identity, onBranchEnter = identity, onBranchExit = identity} = {}) {
+function inAndOut(root, {onLeaf, onBranchEnter, onBranchExit, onEnter, onExit} = {}) {
     const runner = node => {
-        if (node.isLeaf()) {
-            onLeaf(node)
-        } else {
-            onBranchEnter(node)
-            node.children.forEach(runner)
-            onBranchExit(node)
+        const status = onEnter && onEnter(node)
+        if (status === false) {
+            return 
         }
+        if (node.isLeaf()) {
+            onLeaf && onLeaf(node)
+        } else {
+            onBranchEnter && onBranchEnter(node)
+            node.children.forEach(runner)
+            onBranchExit && onBranchExit(node)
+        }
+        onExit && onExit(node)
     }
 
     const node = toNode(root)
